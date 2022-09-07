@@ -1,31 +1,7 @@
 
-class KeyCombination:
-    """Class for managing pressed keyboard combination by updating an internal
 
-    Input: from pynput:keyboard.Key
 
-    On press event call: key_combination_pressed(key)
-
-    On release event call: key_combination_released(key)
-    """
-
-    def __init__(self, combination):
-        self.key_combination = combination
-        self.current_key_states_list = set()
-        pass
-
-    def key_combination_pressed(self, key) -> bool:
-        """Adds the currently pressed key to the class set and returns True if all key is in the list."""
-        if key in self.key_combination:
-            self.current_key_states_list.add(key)
-            if all((key in self.current_key_states_list) for key in self.key_combination):
-                return True
-            else:
-                return False
-
-    def key_combination_released(self, key):
-        if (key in self.current_key_states_list):
-            self.current_key_states_list.remove(key)
+from traceback import print_tb
 
 
 def key_check_if_pressed(key_string, key) -> bool:
@@ -35,11 +11,37 @@ def key_check_if_pressed(key_string, key) -> bool:
         else:
             return False
 
+def wrapper(func, *args):
+    func(*args)
+
 
 class Task:
-    """Have an action to execute """
-    """Have a name, functions"""
-    pass
+    def __init__(self):
+        self.task_list = []
+
+    def add_task(self , task):
+         self.task_list.append(task)
+
+    def remove_task(self):
+        self.task_list.pop()
+
+    def run_task(self):
+        for task in self.task_list:
+            wrapper(*task)    # * to make the itarable expand in args
+
+    def print_tasks(self):
+        for task in self.task_list:
+            for element in task:
+                if(__name__ in dir(element) ):
+                    print(element.__name__)
+                else:
+                    print(element)
+
+
+
+
+
+
 
 
 class SubTask(Task):
